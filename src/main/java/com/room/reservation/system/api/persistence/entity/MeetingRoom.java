@@ -1,5 +1,6 @@
 package com.room.reservation.system.api.persistence.entity;
 
+import com.room.reservation.system.api.dto.meetingRoom.MeetingRoomReadDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "tbl_metingroom")
+@Table(name = "tbl_meetingroom")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MeetingRoom {
     
@@ -33,4 +34,14 @@ public class MeetingRoom {
         this.capacity = capacity;
         this.halfHourlyRate = halfHourlyRate;
     }
-} 
+
+    public MeetingRoomReadDto toMeetingRoomReadDto() {
+        return MeetingRoomReadDto.builder()
+                .id(this.id)
+                .name(this.name)
+                .capacity(this.capacity)
+                .halfHourlyRate(this.halfHourlyRate)
+                .isActive(this.isActive)
+                .build();
+    }
+}

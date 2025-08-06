@@ -37,14 +37,11 @@ public class Reservation {
     @Column(nullable = false)
     private ReservationStatus status = ReservationStatus.PENDING;
     
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
-    private Payment payment;
-    
     @Column(nullable = false)
     private LocalDateTime createdAt;
     
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    private Payment payment;
     
     public Reservation(User user, MeetingRoom meetingRoom, LocalDateTime startTime, 
                       LocalDateTime endTime, Integer totalAmount) {
@@ -54,6 +51,5 @@ public class Reservation {
         this.endTime = endTime;
         this.totalAmount = totalAmount;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
-} 
+}

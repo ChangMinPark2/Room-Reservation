@@ -21,11 +21,18 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
+    defer-datasource-initialization: true
     properties:
       hibernate:
         format_sql: true
+
+  # SQL 초기화 설정 수정
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
 
 # Swagger Configuration
 springdoc:
