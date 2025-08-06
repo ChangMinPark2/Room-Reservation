@@ -1,4 +1,4 @@
-package com.room.reservation.system.api.dto;
+package com.room.reservation.system.api.dto.meetingRoom;
 
 import java.util.List;
 

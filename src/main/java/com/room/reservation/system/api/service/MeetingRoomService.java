@@ -1,7 +1,7 @@
 package com.room.reservation.system.api.service;
 
-import com.room.reservation.system.api.dto.MeetingRoomReadAllDto;
-import com.room.reservation.system.api.dto.MeetingRoomReadDto;
+import com.room.reservation.system.api.dto.meetingRoom.MeetingRoomReadAllDto;
+import com.room.reservation.system.api.dto.meetingRoom.MeetingRoomReadDto;
 import com.room.reservation.system.api.persistence.entity.MeetingRoom;
 import com.room.reservation.system.api.persistence.repository.MeetingRoomRepository;
 import lombok.RequiredArgsConstructor;

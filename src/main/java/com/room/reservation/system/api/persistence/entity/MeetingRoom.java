@@ -1,6 +1,6 @@
 package com.room.reservation.system.api.persistence.entity;
 
-import com.room.reservation.system.api.dto.MeetingRoomReadDto;
+import com.room.reservation.system.api.dto.meetingRoom.MeetingRoomReadDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

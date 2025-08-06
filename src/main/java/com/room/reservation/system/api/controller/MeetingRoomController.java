@@ -1,6 +1,6 @@
 package com.room.reservation.system.api.controller;
 
-import com.room.reservation.system.api.dto.MeetingRoomReadAllDto;
+import com.room.reservation.system.api.dto.meetingRoom.MeetingRoomReadAllDto;
 import com.room.reservation.system.api.service.MeetingRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
