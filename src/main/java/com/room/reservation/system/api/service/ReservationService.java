@@ -3,6 +3,8 @@ package com.room.reservation.system.api.service;
 import com.room.reservation.system.api.dto.reservation.ReservationCreateDto;
 import com.room.reservation.system.api.dto.reservation.ReservationReadDto;
 import com.room.reservation.system.api.dto.reservation.ReservationReadAllDto;
+import com.room.reservation.system.api.dto.reservation.ReservationReadRequestDto;
+import com.room.reservation.system.api.dto.reservation.ReservationDeleteDto;
 import com.room.reservation.system.api.persistence.entity.MeetingRoom;
 import com.room.reservation.system.api.persistence.entity.Payment;
 import com.room.reservation.system.api.persistence.entity.Reservation;
@@ -23,7 +25,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import com.room.reservation.system.api.dto.reservation.ReservationReadRequestDto;
 
 @Service
 @Transactional
@@ -57,9 +58,9 @@ public class ReservationService {
         final LocalDateTime startDateTime = today.with(dto.startTime());
         final LocalDateTime endDateTime = today.with(dto.endTime());
 
+        final Payment payment = Payment.create(totalAmount);
         final Reservation reservation = Reservation.create(
-                user, meetingRoom, startDateTime, endDateTime, totalAmount);
-        final Payment payment = Payment.create(reservation, totalAmount);
+                user, meetingRoom, startDateTime, endDateTime, totalAmount, payment);
 
         reservationRepository.save(reservation);
         paymentRepository.save(payment);
@@ -77,6 +78,14 @@ public class ReservationService {
                         .map(Reservation::toReadDto)
                         .toList()
         );
+    }
+
+    public void delete(ReservationDeleteDto dto) {
+        final Reservation reservation = reservationRepository.findReservationByUserAndId(
+                        dto.userName(), dto.phoneNumber(), dto.reservationId())
+                .orElseThrow(() -> new NotFoundException(ErrorCode.FAIL_NOT_RESERVATION));
+
+        reservationRepository.delete(reservation);
     }
 
     private static void validateExists(List<Reservation> reservations) {

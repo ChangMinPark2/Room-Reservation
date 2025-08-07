@@ -32,4 +32,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllReservationsByUser(
             @Param("userName") String userName,
             @Param("phoneNumber") String phoneNumber);
+
+    /**
+     * 사용자 이름, 폰번호, 예약 ID로 특정 예약 조회
+     */
+    @Query("SELECT r FROM Reservation r WHERE r.user.name = :userName " +
+           "AND r.user.phoneNumber = :phoneNumber " +
+           "AND r.id = :reservationId")
+    Optional<Reservation> findReservationByUserAndId(
+            @Param("userName") String userName,
+            @Param("phoneNumber") String phoneNumber,
+            @Param("reservationId") Long reservationId);
 } 
