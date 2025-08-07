@@ -1,7 +1,9 @@
 package com.room.reservation.system.api.persistence.entity;
 
+import com.room.reservation.system.api.dto.reservation.ReservationReadDto;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -83,5 +85,16 @@ public class Reservation {
 
     public void confirm() {
         this.status = ReservationStatus.CONFIRMED;
+    }
+
+    public ReservationReadDto toReadDto() {
+        return ReservationReadDto.builder()
+            .reservationId(this.id)
+            .userName(this.user.getName())
+            .startDate(this.startTime)
+            .endTime(this.endTime)
+            .totalAmount(this.totalAmount)
+            .reservationStatus(this.status.name())
+            .build();
     }
 }
