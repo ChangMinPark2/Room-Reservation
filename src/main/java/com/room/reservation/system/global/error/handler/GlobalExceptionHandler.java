@@ -1,5 +1,6 @@
 package com.room.reservation.system.global.error.handler;
 
+import com.room.reservation.system.global.error.exception.BadRequestException;
 import com.room.reservation.system.global.error.exception.NotFoundException;
 import com.room.reservation.system.global.error.model.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,12 @@ public class GlobalExceptionHandler {
 	protected ResponseEntity<Object> handleNotFoundException(NotFoundException e) {
 		ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(BadRequestException.class)
+	protected ResponseEntity<Object> handleValidateException(BadRequestException e) {
+		ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
