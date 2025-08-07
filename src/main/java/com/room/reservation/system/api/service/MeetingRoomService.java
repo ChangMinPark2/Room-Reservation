@@ -31,11 +31,11 @@ public class MeetingRoomService {
     @Transactional(readOnly = true)
     public MeetingRoomReadAllDto readAll() {
         final List<MeetingRoom> meetingRooms = meetingRoomRepository.findByIsActiveTrue();
-        final List<MeetingRoomReadDto> meetingRoomDtos = meetingRooms.stream()
-                .map(MeetingRoom::toMeetingRoomReadDto)
-                .toList();
 
-        return new MeetingRoomReadAllDto(meetingRoomDtos);
+        return new MeetingRoomReadAllDto(meetingRooms.stream()
+                .map(MeetingRoom::toMeetingRoomReadDto)
+                .toList()
+        );
     }
 
     @Transactional(readOnly = true)
