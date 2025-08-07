@@ -21,10 +21,6 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "reservation_id", nullable = false)
-    private Reservation reservation;
-    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payment_provider_id", nullable = true)
     private PaymentProvider paymentProvider;
@@ -47,15 +43,14 @@ public class Payment {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
     
-    private Payment(Reservation reservation, Integer amount) {
-        this.reservation = reservation;
+    private Payment(Integer amount) {
         this.amount = amount;
         this.status = PaymentStatus.PENDING;
         this.externalPaymentId = generateExternalPaymentId();
     }
 
-    public static Payment create(Reservation reservation, Integer amount) {
-        return new Payment(reservation, amount);
+    public static Payment create(Integer amount) {
+        return new Payment(amount);
     }
 
     public void confirm() {
