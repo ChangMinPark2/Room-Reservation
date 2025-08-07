@@ -1,6 +1,8 @@
 package com.room.reservation.system.api.service;
 
 import com.room.reservation.system.api.dto.reservation.ReservationCreateDto;
+import com.room.reservation.system.api.dto.reservation.ReservationReadDto;
+import com.room.reservation.system.api.dto.reservation.ReservationReadAllDto;
 import com.room.reservation.system.api.persistence.entity.MeetingRoom;
 import com.room.reservation.system.api.persistence.entity.Payment;
 import com.room.reservation.system.api.persistence.entity.Reservation;
@@ -20,6 +22,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
+import com.room.reservation.system.api.dto.reservation.ReservationReadRequestDto;
 
 @Service
 @Transactional
@@ -54,11 +58,31 @@ public class ReservationService {
         final LocalDateTime endDateTime = today.with(dto.endTime());
 
         final Reservation reservation = Reservation.create(
-            user, meetingRoom, startDateTime, endDateTime, totalAmount);
+                user, meetingRoom, startDateTime, endDateTime, totalAmount);
         final Payment payment = Payment.create(reservation, totalAmount);
 
         reservationRepository.save(reservation);
         paymentRepository.save(payment);
+    }
+
+    @Transactional(readOnly = true)
+    public ReservationReadAllDto readAllReservations(ReservationReadRequestDto dto) {
+        final List<Reservation> reservations = reservationRepository.findAllReservationsByUser(
+                dto.userName(), dto.phoneNumber());
+
+        validateExists(reservations);
+
+        return new ReservationReadAllDto(
+                reservations.stream()
+                        .map(Reservation::toReadDto)
+                        .toList()
+        );
+    }
+
+    private static void validateExists(List<Reservation> reservations) {
+        if (reservations.isEmpty()) {
+            throw new NotFoundException(ErrorCode.FAIL_NOT_RESERVATION);
+        }
     }
 
     private void validateAfterTime(LocalTime startTime) {
