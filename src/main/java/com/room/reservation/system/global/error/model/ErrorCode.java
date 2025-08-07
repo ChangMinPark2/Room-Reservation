@@ -12,6 +12,7 @@ public enum ErrorCode {
 	//FailNotFound 404 error
 	FAIL_NOT_MEETING_ROOM("해당 회의실을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 	FAIL_NOT_USER("해당 유저를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+	FAIL_NOT_RESERVATION("해당 예약을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 	
 	//BadRequest 400 error
 	INVALID_TIME_FORMAT("시간 입력은 00분 단위, 30분 단위로만 가능합니다.", HttpStatus.BAD_REQUEST),
