@@ -6,7 +6,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
-    
+    // 변경사항 테스트
+
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
