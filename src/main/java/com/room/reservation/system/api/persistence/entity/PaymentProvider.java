@@ -22,25 +22,17 @@ public class PaymentProvider {
     @Column(name = "api_endpoint", nullable = false)
     private String apiEndpoint;
 
-    @Column(name = "api_key", nullable = false)
-    private String apiKey;
-
-    @Column(name = "secret_key", nullable = false)
-    private String secretKey;
+    @Column(name = "auth_info", nullable = false)
+    private String authInfo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private PaymentProviderType type;
 
-    @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true;
-
-    public PaymentProvider(String name, String apiEndpoint, String apiKey,
-                           String secretKey, PaymentProviderType type) {
+    public PaymentProvider(String name, String apiEndpoint, String authInfo, PaymentProviderType type) {
         this.name = name;
         this.apiEndpoint = apiEndpoint;
-        this.apiKey = apiKey;
-        this.secretKey = secretKey;
+        this.authInfo = authInfo;
         this.type = type;
     }
 } 
