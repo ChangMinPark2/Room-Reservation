@@ -4,7 +4,6 @@ import com.room.reservation.system.api.dto.reservation.ReservationReadDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 
 import lombok.Builder;
 import lombok.Getter;

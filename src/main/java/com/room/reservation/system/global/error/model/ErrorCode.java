@@ -19,7 +19,11 @@ public enum ErrorCode {
 	INVALID_TIME_RANGE("시작 시간은 종료 시간보다 이전이어야 합니다.", HttpStatus.BAD_REQUEST),
 	PAST_TIME_RESERVATION("현재 시간 이후만 예약 가능합니다.", HttpStatus.BAD_REQUEST),
 	NOT_TODAY_RESERVATION("오늘 날짜만 예약 가능합니다.", HttpStatus.BAD_REQUEST),
-	ALREADY_RESERVED_TIME("이미 예약된 시간대입니다.", HttpStatus.BAD_REQUEST);
+	ALREADY_RESERVED_TIME("이미 예약된 시간대입니다.", HttpStatus.BAD_REQUEST),
+	FAIL_INVALID_USER("예약자 정보가 일치하지 않습니다.", HttpStatus.BAD_REQUEST),
+	FAIL_ALREADY_PAID("이미 결제가 완료된 예약입니다.", HttpStatus.BAD_REQUEST),
+	FAIL_NOT_PAYMENT_PROVIDER("해당 결제사를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+	FAIL_INVALID_WEBHOOK("웹훅 검증에 실패했습니다.", HttpStatus.BAD_REQUEST);
 
 	private String message;
 	private HttpStatus statusCode;
