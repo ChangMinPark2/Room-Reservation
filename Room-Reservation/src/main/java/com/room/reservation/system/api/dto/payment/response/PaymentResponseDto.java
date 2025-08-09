@@ -1,4 +1,4 @@
-package com.room.reservation.system.api.dto.payment;
+package com.room.reservation.system.api.dto.payment.response;
 
 import com.room.reservation.system.api.persistence.entity.PaymentProviderType;
 import com.room.reservation.system.api.persistence.entity.PaymentStatus;
