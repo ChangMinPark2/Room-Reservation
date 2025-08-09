@@ -81,7 +81,7 @@ public class PaymentService {
      */
     private String generateStatusMessage(PaymentStatus status, PaymentProvider provider) {
         if (provider == null) {
-            return provider.getName() + "에서 결제가 성공적으로 완료되었습니다.";
+            return "결제가 진행 중입니다. 잠시만 기다려 주세요.";
         }
         
         return switch (status) {

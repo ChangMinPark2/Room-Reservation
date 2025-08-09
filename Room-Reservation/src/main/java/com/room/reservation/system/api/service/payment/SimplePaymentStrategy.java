@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class SimplePaymentStrategy implements PaymentStrategy {
     
     private final RestTemplate restTemplate;
-    private static final String SIMPLE_API_BASE_URL = "http://localhost:8081";
+    private static final String SIMPLE_API_BASE_URL = "http://mock-payment-server:8081";
     
     public SimplePaymentStrategy(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
