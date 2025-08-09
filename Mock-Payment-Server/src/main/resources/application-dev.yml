@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: mock-payment-server
+
+# 서버 설정
+server:
+  port: 8081
+
+# 로깅 설정
+logging:
+  level:
+    com.example.demo: DEBUG
+    org.springframework.web: DEBUG
+
+# Mock 서버 전용 설정
+mock:
+  payment:
+    webhook:
+      base-url: http://room-reservation-server:8080
+    delay:
+      seconds: 1

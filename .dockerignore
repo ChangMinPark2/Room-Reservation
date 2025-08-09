@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+**/build/
+**/target/
+**/.gradle/
+
+# Logs
+*.log
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Documentation
+README.md
+*.md

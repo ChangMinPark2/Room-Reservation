@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # MySQL 데이터베이스
+  mysql:
+    image: mysql:8.0
+    container_name: room-reservation-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=room_reservation
+      - MYSQL_USER=room_user
+      - MYSQL_PASSWORD=room_pass
+      - TZ=Asia/Seoul
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./Room-Reservation/src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql:ro
+    networks:
+      - reservation-network
+    restart: unless-stopped
+    command: [
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-authentication-plugin=mysql_native_password'
+    ]
+
+  # 회의실 예약 메인 서버
+  room-reservation-server:
+    build: 
+      context: ./Room-Reservation
+      dockerfile: Dockerfile
+    container_name: room-reservation-server
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/room_reservation?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useUnicode=true
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_DATASOURCE_USERNAME=room_user
+      - SPRING_DATASOURCE_PASSWORD=room_pass
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_SQL_INIT_MODE=always
+      - TZ=Asia/Seoul
+    depends_on:
+      - mysql
+      - mock-payment-server
+    networks:
+      - reservation-network
+    restart: unless-stopped
+
+  # Mock 결제 서버
+  mock-payment-server:
+    build: 
+      context: ./Mock-Payment-Server
+      dockerfile: Dockerfile
+    container_name: mock-payment-server
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SERVER_PORT=8081
+      - TZ=Asia/Seoul
+    networks:
+      - reservation-network
+    restart: unless-stopped
+
+networks:
+  reservation-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
