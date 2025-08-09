@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 public class WebhookService {
 
     private final RestTemplate restTemplate;
-    private static final String MAIN_SERVER_WEBHOOK_URL = "http://localhost:8080/webhooks/payments";
+    private static final String MAIN_SERVER_WEBHOOK_URL = "http://room-reservation-server:8080/webhooks/payments";
 
     public void sendPaymentWebhook(
             String externalPaymentId,

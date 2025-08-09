@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class CardPaymentStrategy implements PaymentStrategy {
     
     private final RestTemplate restTemplate;
-    private static final String CARD_API_BASE_URL = "http://localhost:8081";
+    private static final String CARD_API_BASE_URL = "http://mock-payment-server:8081";
     
     public CardPaymentStrategy(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

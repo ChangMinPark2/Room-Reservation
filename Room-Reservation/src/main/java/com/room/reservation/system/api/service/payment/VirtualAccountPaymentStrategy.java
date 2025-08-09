@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class VirtualAccountPaymentStrategy implements PaymentStrategy {
     
     private final RestTemplate restTemplate;
-    private static final String VIRTUAL_API_BASE_URL = "http://localhost:8081";
+    private static final String VIRTUAL_API_BASE_URL = "http://mock-payment-server:8081";
     
     public VirtualAccountPaymentStrategy(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
