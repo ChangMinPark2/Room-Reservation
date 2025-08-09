@@ -24,7 +24,7 @@ public class MeetingRoomController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MeetingRoomDetailDto> read(@PathVariable Long id) {
+    public ResponseEntity<MeetingRoomDetailDto> read(@PathVariable("id") Long id) {
         MeetingRoomDetailDto meetingRoom = meetingRoomService.read(id);
         return ResponseEntity.ok(meetingRoom);
     }
