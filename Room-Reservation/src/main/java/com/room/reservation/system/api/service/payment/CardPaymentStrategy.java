@@ -30,7 +30,8 @@ public class CardPaymentStrategy implements PaymentStrategy {
             "A_COMPANY",
             reservation.getId().toString(),
             request.userName(),
-            request.phoneNumber()
+            request.phoneNumber(),
+            "CARD_PAYMENT"
         );
 
         final PaymentPendingResponseDto mockResponse = restTemplate.postForObject(

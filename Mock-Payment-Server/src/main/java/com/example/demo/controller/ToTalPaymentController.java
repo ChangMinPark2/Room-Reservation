@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PaymentProviderRequestDto;
 import com.example.demo.dto.PaymentPendingResponseDto;
-import com.example.demo.service.SimplePaymentService;
+import com.example.demo.service.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +13,11 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/payment")
 public class ToTalPaymentController {
 
-    private final SimplePaymentService simplePaymentService;
+    private final PaymentService paymentService;
 
     @PostMapping
     public ResponseEntity<PaymentPendingResponseDto> processPayment(@RequestBody PaymentProviderRequestDto request) {
-        PaymentPendingResponseDto response = simplePaymentService.processPayment(request);
+        PaymentPendingResponseDto response = paymentService.processPayment(request);
         return ResponseEntity.ok(response);
     }
 } 

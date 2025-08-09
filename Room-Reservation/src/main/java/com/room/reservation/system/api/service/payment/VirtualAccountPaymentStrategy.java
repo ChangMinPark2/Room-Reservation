@@ -30,7 +30,8 @@ public class VirtualAccountPaymentStrategy implements PaymentStrategy {
             "C_COMPANY",
             reservation.getId().toString(),
             request.userName(),
-            request.phoneNumber()
+            request.phoneNumber(),
+            "VIRTUAL_ACCOUNT"
         );
 
         final PaymentPendingResponseDto mockResponse = restTemplate.postForObject(
