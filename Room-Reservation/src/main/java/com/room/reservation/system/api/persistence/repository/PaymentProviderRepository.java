@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PaymentProviderRepository extends JpaRepository<PaymentProvider, Long> {
     Optional<PaymentProvider> findByType(PaymentProviderType type);
+    Optional<PaymentProvider> findByName(String name);
 } 

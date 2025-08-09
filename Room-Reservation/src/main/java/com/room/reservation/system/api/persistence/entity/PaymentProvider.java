@@ -29,10 +29,14 @@ public class PaymentProvider {
     @Column(name = "type", nullable = false)
     private PaymentProviderType type;
 
-    public PaymentProvider(String name, String apiEndpoint, String authInfo, PaymentProviderType type) {
+    private PaymentProvider(String name, PaymentProviderType type, String apiEndpoint, String authInfo) {
         this.name = name;
+        this.type = type;
         this.apiEndpoint = apiEndpoint;
         this.authInfo = authInfo;
-        this.type = type;
+    }
+
+    public static PaymentProvider create(String name, PaymentProviderType type, String apiEndpoint, String authInfo) {
+        return new PaymentProvider(name, type, apiEndpoint, authInfo);
     }
 } 

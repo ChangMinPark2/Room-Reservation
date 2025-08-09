@@ -69,4 +69,12 @@ public class Payment {
     public void updateExternalPaymentId(String externalPaymentId) {
         this.externalPaymentId = externalPaymentId;
     }
+
+    public void updateStatus(PaymentStatus status) {
+        this.status = status;
+    }
+
+    public void updatePaymentProvider(PaymentProvider paymentProvider) {
+        this.paymentProvider = paymentProvider;
+    }
 } 
