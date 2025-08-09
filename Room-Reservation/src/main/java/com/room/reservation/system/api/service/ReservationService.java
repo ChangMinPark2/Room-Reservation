@@ -1,16 +1,13 @@
 package com.room.reservation.system.api.service;
 
 import com.room.reservation.system.api.dto.reservation.ReservationCreateDto;
-import com.room.reservation.system.api.dto.reservation.ReservationReadDto;
 import com.room.reservation.system.api.dto.reservation.ReservationReadAllDto;
 import com.room.reservation.system.api.dto.reservation.ReservationReadRequestDto;
 import com.room.reservation.system.api.dto.reservation.ReservationDeleteDto;
-import com.room.reservation.system.api.persistence.entity.MeetingRoom;
-import com.room.reservation.system.api.persistence.entity.Payment;
+import com.room.reservation.system.api.persistence.entity.MeetingRoom;          
 import com.room.reservation.system.api.persistence.entity.Reservation;
 import com.room.reservation.system.api.persistence.entity.User;
 import com.room.reservation.system.api.persistence.repository.MeetingRoomRepository;
-import com.room.reservation.system.api.persistence.repository.PaymentRepository;
 import com.room.reservation.system.api.persistence.repository.ReservationRepository;
 import com.room.reservation.system.api.persistence.repository.UserRepository;
 import com.room.reservation.system.global.error.exception.BadRequestException;
@@ -20,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -34,7 +30,6 @@ public class ReservationService {
     private final MeetingRoomRepository meetingRoomRepository;
     private final UserRepository userRepository;
     private final ReservationRepository reservationRepository;
-    private final PaymentRepository paymentRepository;
 
     public void create(ReservationCreateDto dto) {
         final MeetingRoom meetingRoom = meetingRoomRepository.findById(dto.meetingRoomId())
@@ -58,12 +53,10 @@ public class ReservationService {
         final LocalDateTime startDateTime = today.with(dto.startTime());
         final LocalDateTime endDateTime = today.with(dto.endTime());
 
-        final Payment payment = Payment.create(totalAmount);
         final Reservation reservation = Reservation.create(
-                user, meetingRoom, startDateTime, endDateTime, totalAmount, payment);
+                user, meetingRoom, startDateTime, endDateTime, totalAmount);
 
         reservationRepository.save(reservation);
-        paymentRepository.save(payment);
     }
 
     @Transactional(readOnly = true)

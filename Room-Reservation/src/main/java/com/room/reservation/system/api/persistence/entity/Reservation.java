@@ -48,10 +48,6 @@ public class Reservation {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
-
     @Builder
     private Reservation(Long id,
                         User user,
@@ -59,8 +55,7 @@ public class Reservation {
                         LocalDateTime startTime,
                         LocalDateTime endTime,
                         Integer totalAmount,
-                        ReservationStatus status,
-                        Payment payment
+                        ReservationStatus status
     ) {
         this.id = id;
         this.user = user;
@@ -69,7 +64,6 @@ public class Reservation {
         this.endTime = endTime;
         this.totalAmount = totalAmount;
         this.status = status;
-        this.payment = payment;
     }
 
     public static Reservation create(
@@ -77,8 +71,7 @@ public class Reservation {
             MeetingRoom meetingRoom,
             LocalDateTime startTime,
             LocalDateTime endTime,
-            Integer totalAmount,
-            Payment payment
+            Integer totalAmount
     ) {
         return Reservation.builder()
                 .user(user)
@@ -87,7 +80,6 @@ public class Reservation {
                 .endTime(endTime)
                 .totalAmount(totalAmount)
                 .status(ReservationStatus.PENDING)
-                .payment(payment)
                 .build();
     }
 

@@ -2,6 +2,7 @@ package com.room.reservation.system.api.persistence.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
@@ -43,6 +44,11 @@ public class Payment {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
     
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
+
+    @Builder
     private Payment(Integer amount) {
         this.amount = amount;
         this.status = PaymentStatus.PENDING;
