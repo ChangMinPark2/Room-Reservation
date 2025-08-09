@@ -33,7 +33,7 @@ public class Payment {
     @Column(name = "status", nullable = false)
     private PaymentStatus status;
     
-    @Column(name = "external_payment_id", nullable = false)
+    @Column(name = "external_payment_id", nullable = true)
     private String externalPaymentId;
     
     @CreatedDate
@@ -48,15 +48,14 @@ public class Payment {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    @Builder
-    private Payment(Integer amount) {
+    private Payment(Integer amount, Reservation reservation) {
         this.amount = amount;
         this.status = PaymentStatus.PENDING;
-        this.externalPaymentId = generateExternalPaymentId();
+        this.reservation = reservation;
     }
 
-    public static Payment create(Integer amount) {
-        return new Payment(amount);
+    public static Payment create(Integer amount, Reservation reservation) {
+        return new Payment(amount, reservation);
     }
 
     public void confirm() {
@@ -67,7 +66,7 @@ public class Payment {
         this.status = PaymentStatus.FAILED;
     }
 
-    private static String generateExternalPaymentId() {
-        return "PAY_" + System.currentTimeMillis();
+    public void updateExternalPaymentId(String externalPaymentId) {
+        this.externalPaymentId = externalPaymentId;
     }
 } 
