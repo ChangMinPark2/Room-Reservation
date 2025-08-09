@@ -1,8 +1,7 @@
-package com.room.reservation.system.api.dto.payment;
+package com.room.reservation.system.api.dto.payment.request;
 
 import com.room.reservation.system.api.persistence.entity.PaymentProviderType;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 /**
  * 결제 요청 DTO
