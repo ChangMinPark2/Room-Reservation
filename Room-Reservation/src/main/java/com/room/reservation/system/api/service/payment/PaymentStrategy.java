@@ -1,23 +1,21 @@
 package com.room.reservation.system.api.service.payment;
 
-import com.room.reservation.system.api.dto.payment.PaymentRequestDto;
-import com.room.reservation.system.api.dto.payment.PaymentResponseDto;
+import com.room.reservation.system.api.dto.payment.request.PaymentRequestDto;
+import com.room.reservation.system.api.dto.payment.response.PaymentResponseDto;
+import com.room.reservation.system.api.dto.payment.response.PaymentPendingResponseDto;
 import com.room.reservation.system.api.persistence.entity.PaymentStatus;
 import com.room.reservation.system.api.persistence.entity.Reservation;
 
-/**
- * 결제 전략 인터페이스
- * F-Lab 방식: Strategy Pattern을 사용한 결제 방식 추상화
- */
 public interface PaymentStrategy {
     
     /**
      * 결제 처리
+     * @param paymentId 내부 결제 ID
      * @param reservation 예약 정보
      * @param request 결제 요청 정보
-     * @return 결제 결과
+     * @return 결제 대기 상태
      */
-    PaymentResponseDto pay(Reservation reservation, PaymentRequestDto request);
+    PaymentPendingResponseDto pay(Long paymentId, Reservation reservation, PaymentRequestDto request);
     
     /**
      * 결제 상태 조회
