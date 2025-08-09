@@ -1,5 +1,6 @@
 package com.room.reservation.system.api.persistence.entity;
 
+import com.room.reservation.system.api.dto.payment.PaymentStatusResponseDto;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -56,6 +57,18 @@ public class Payment {
 
     public static Payment create(Integer amount, Reservation reservation) {
         return new Payment(amount, reservation);
+    }
+
+    public PaymentStatusResponseDto toResponseDto(String message) {
+        return new PaymentStatusResponseDto(
+            this.reservation.getId(),
+            this.id,
+            this.externalPaymentId,
+            this.status.name(),
+            this.paymentProvider.getName(),
+            amount,
+            message
+        );
     }
 
     public void confirm() {
