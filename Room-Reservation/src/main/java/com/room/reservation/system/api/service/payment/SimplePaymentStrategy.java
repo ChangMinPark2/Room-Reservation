@@ -30,7 +30,8 @@ public class SimplePaymentStrategy implements PaymentStrategy {
             "B_COMPANY",                    // 상점 ID
             reservation.getId().toString(), // 예약 ID
             request.userName(),             // 사용자 이름
-            request.phoneNumber()           // 사용자 전화번호
+            request.phoneNumber(),          // 사용자 전화번호
+            "SIMPLE_PAYMENT"                // 결제사 타입
         );
 
         final PaymentPendingResponseDto mockResponse = restTemplate.postForObject(
