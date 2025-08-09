@@ -7,5 +7,6 @@ public record PaymentProviderRequestDto(
     String merchantId,       // 상점 ID
     String reservationId,    // 예약 ID
     String userName,         // 사용자 이름
-    String phoneNumber       // 사용자 전화번호
+    String phoneNumber,      // 사용자 전화번호
+    String providerType      // 결제사 타입 (SIMPLE_PAYMENT, CARD_PAYMENT, VIRTUAL_ACCOUNT)
 ) {}
