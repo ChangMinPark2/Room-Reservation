@@ -46,7 +46,7 @@ git clone https://github.com/ChangMinPark2/Room-Reservation.git
 
 ### 2. 프로젝트 이동
 ```bash
-cd Room-Reservation-Server
+cd Room-Reservation
 ```
 
 ### 3. Docker Compose 실행
