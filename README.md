@@ -160,7 +160,7 @@ curl -X POST "http://localhost:8080/api/payments" \
 ## 🏗 클라우드 아키텍처 다이어그램
 
 
-<img width="1732" height="818" alt="Image" src="https://github.com/user-attachments/assets/d0dc5324-678e-4de8-abb2-845d90a2e60e" />
+<img width="1296" height="572" alt="Image" src="https://github.com/user-attachments/assets/9e204d8c-e9ce-4c28-91df-a10ef6fb5dc7" />
 
 ---
 
