@@ -159,36 +159,8 @@ curl -X POST "http://localhost:8080/api/payments" \
 
 ## 🏗 클라우드 아키텍처 다이어그램
 
-```mermaid
-graph TB
-    subgraph "Client Layer"
-        A[Web Client]
-        B[Mobile App]
-    end
-    
-    subgraph "Application Layer"
-        D[Room Reservation API<br/>:8080]
-        E[Mock Payment Server<br/>:8081]
-    end
-    
-    subgraph "Data Layer"
-        F[(MySQL Database<br/>:3306)]
-    end
-    
-    A --> D
-    B --> D
-    
-    %% 결제 요청 흐름
-    D -->|1. 결제 요청| E
-    E -->|2. 결제 처리| E
-    E -->|3. 결제 결과| D
-    
-    %% 웹훅 흐름
-    E -->|4. 웹훅 전송| D
-    
-    %% 데이터 저장
-    D --> F
-```
+
+<img width="1732" height="818" alt="Image" src="https://github.com/user-attachments/assets/d0dc5324-678e-4de8-abb2-845d90a2e60e" />
 
 ---
 
