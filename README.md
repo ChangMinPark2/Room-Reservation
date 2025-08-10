@@ -119,15 +119,14 @@ http://localhost:8080/swagger-ui/index.html
 
 ## 🧪 테스트 실행 방법
 
-### 1. 전체 테스트 실행
+### 1. 메인 서버 테스트 실행
 ```bash
-# 메인 서버 테스트
 cd Room-Reservation
 ./gradlew test
+```
 
-### 2. Docker 환경에서 테스트
+### 2. Docker 환경에서 테스트 실행
 ```bash
-# 컨테이너 내부에서 테스트 실행
 docker exec -it room-reservation-server ./gradlew test
 ```
 
