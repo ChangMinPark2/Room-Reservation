@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class WebhookService {
 
@@ -53,7 +54,10 @@ public class WebhookService {
 
             payment.updateStatus(convertToPaymentStatus(webhookData.status()));
             payment.updatePaymentProvider(paymentProvider);
-
+            
+            // 결제가 성공한 경우 예약 상태를 CONFIRMED로 변경
+            confirmReservation(payment, webhookData.status());
+            
             log.info("=== 웹훅 처리 완료 ===");
 
         } catch (Exception e) {
@@ -87,5 +91,15 @@ public class WebhookService {
                 yield PaymentStatus.FAILED;
             }
         };
+    }
+
+    /**
+     * 결제 성공 시 예약 상태를 CONFIRMED로 변경
+     */
+    private void confirmReservation(Payment payment, String webhookStatus) {
+        if (convertToPaymentStatus(webhookStatus) == PaymentStatus.SUCCESS) {
+            payment.getReservation().confirm();
+            log.info("예약 상태를 CONFIRMED로 변경 완료 - 예약ID: {}", payment.getReservation().getId());
+        }
     }
 }

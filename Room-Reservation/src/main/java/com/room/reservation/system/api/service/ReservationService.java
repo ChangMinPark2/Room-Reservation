@@ -5,9 +5,11 @@ import com.room.reservation.system.api.dto.reservation.ReservationReadAllDto;
 import com.room.reservation.system.api.dto.reservation.ReservationReadRequestDto;
 import com.room.reservation.system.api.dto.reservation.ReservationDeleteDto;
 import com.room.reservation.system.api.persistence.entity.MeetingRoom;          
+import com.room.reservation.system.api.persistence.entity.Payment;
 import com.room.reservation.system.api.persistence.entity.Reservation;
 import com.room.reservation.system.api.persistence.entity.User;
 import com.room.reservation.system.api.persistence.repository.MeetingRoomRepository;
+import com.room.reservation.system.api.persistence.repository.PaymentRepository;
 import com.room.reservation.system.api.persistence.repository.ReservationRepository;
 import com.room.reservation.system.api.persistence.repository.UserRepository;
 import com.room.reservation.system.global.error.exception.BadRequestException;
@@ -30,11 +32,12 @@ public class ReservationService {
     private final MeetingRoomRepository meetingRoomRepository;
     private final UserRepository userRepository;
     private final ReservationRepository reservationRepository;
+    private final PaymentRepository paymentRepository;
 
     public void create(ReservationCreateDto dto) {
         final MeetingRoom meetingRoom = meetingRoomRepository.findById(dto.meetingRoomId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.FAIL_NOT_MEETING_ROOM));
-        final User user = userRepository.findById(dto.userId())
+        final User user = userRepository.findByNameAndPhoneNumber(dto.name(), dto.phoneNumber())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.FAIL_NOT_USER));
         final LocalDateTime now = LocalDateTime.now();
         final List<Reservation> todayReservations = reservationRepository.findReservationsAfterCurrentTime(
@@ -78,6 +81,10 @@ public class ReservationService {
                         dto.userName(), dto.phoneNumber(), dto.reservationId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.FAIL_NOT_RESERVATION));
 
+        // 예약과 관련된 결제 정보 먼저 삭제
+        paymentRepository.deleteAll(paymentRepository.findByReservationId(reservation.getId()));
+
+        // 예약 삭제
         reservationRepository.delete(reservation);
     }
 
