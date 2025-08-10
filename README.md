@@ -37,25 +37,31 @@
 
 ## 🚀 실행 방법
 
+> **⚠️ 주의사항**: 실행 전 반드시 **Docker Desktop이 실행되어 있어야 합니다!**
+
 ### 1. 프로젝트 클론
 ```bash
 git clone https://github.com/ChangMinPark2/Room-Reservation.git
+```
+
+### 2. 프로젝트 이동
+```bash
 cd Room-Reservation-Server
 ```
 
-### 2. Docker Compose 실행
+### 3. Docker Compose 실행
 ```bash
 docker-compose up --build
 ```
 
 > **💡 Tip**: 위 명령어를 클릭하면 바로 복사할 수 있습니다!
 
-### 3. 서비스 확인
+### 4. 서비스 확인
 - **메인 서버**: http://localhost:8080
 - **Mock 결제 서버**: http://localhost:8081
 - **MySQL**: localhost:3306
 
-### 4. 초기 데이터
+### 5. 초기 데이터
 애플리케이션 실행 시 `data.sql`에 의해 다음 데이터가 자동으로 생성됩니다:
 
 #### 👥 회원 정보 (3명)
@@ -119,16 +125,10 @@ http://localhost:8080/swagger-ui/index.html
 cd Room-Reservation
 ./gradlew test
 
-# Mock 결제 서버 테스트
-cd Mock-Payment-Server
-./gradlew test
-```
-
 ### 2. Docker 환경에서 테스트
 ```bash
 # 컨테이너 내부에서 테스트 실행
 docker exec -it room-reservation-server ./gradlew test
-docker exec -it mock-payment-server ./gradlew test
 ```
 
 ### 3. API 테스트 시나리오
