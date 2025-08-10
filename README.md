@@ -40,7 +40,7 @@
 ### 1. 프로젝트 클론
 ```bash
 git clone https://github.com/ChangMinPark2/Room-Reservation.git
-cd Room-Reservation
+cd Room-Reservation-Server
 ```
 
 ### 2. Docker Compose 실행
@@ -82,6 +82,8 @@ http://localhost:8080/swagger-ui/index.html
 > **⚠️ 주의사항**: Swagger UI에서 가끔 POST(생성) 요청 시 404 에러가 발생할 수 있습니다. 이는 Swagger UI의 알려진 문제점이며, 실제 API는 정상 동작합니다. GET(조회) 요청은 문제없이 작동합니다.
 
 > **💡 설계 의도**: 예약 조회 요청이 POST로 설계된 이유는, 원래 회원 기능을 구현했다면 헤더 정보로 사용자를 판별했겠지만, **핵심 비즈니스 로직에만 중점**을 두기 위해 **이름과 핸드폰번호로만 회원을 판별**하도록 설계했습니다.
+
+> **⏰ 예약 시간 검증**: 예약 시작시간은 **현재 시간보다 이후**여야 합니다. 예를 들어 현재 17:07분이라면, 17:30부터 예약이 가능합니다. 이는 실제 운영 환경을 고려한 비즈니스 로직입니다.
 
 ### 주요 API 엔드포인트
 
