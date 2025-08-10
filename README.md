@@ -166,33 +166,28 @@ graph TB
         B[Mobile App]
     end
     
-    subgraph "API Gateway"
-        C[Load Balancer]
-    end
-    
     subgraph "Application Layer"
-        D[Room Reservation API]
-        E[Mock Payment API]
+        D[Room Reservation API<br/>:8080]
+        E[Mock Payment Server<br/>:8081]
     end
     
     subgraph "Data Layer"
-        F[(MySQL Database)]
-        G[Redis Cache]
+        F[(MySQL Database<br/>:3306)]
     end
     
-    subgraph "External Services"
-        H[Payment Gateway]
-        I[Email Service]
-    end
+    A --> D
+    B --> D
     
-    A --> C
-    B --> C
-    C --> D
-    C --> E
+    %% 결제 요청 흐름
+    D -->|1. 결제 요청| E
+    E -->|2. 결제 처리| E
+    E -->|3. 결제 결과| D
+    
+    %% 웹훅 흐름
+    E -->|4. 웹훅 전송| D
+    
+    %% 데이터 저장
     D --> F
-    D --> G
-    E --> H
-    D --> I
 ```
 
 ---
