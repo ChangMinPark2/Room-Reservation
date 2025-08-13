@@ -239,6 +239,43 @@ Room-Reservation/
 - Java 17+
 - Gradle 8.5+
 
+---
+
+## 동시성 제어 개선 방안
+
+**코드 제출 후 로직의 잘못된 부분이 떠올랐습니다.**
+
+**현재 상황**: 예약 생성 기능에 `validateAlreadyReservation` 메서드가 애플리케이션 레벨에서만 중복 체크
+
+**문제점**: 
+- 예약 생성 시 레이스 컨디션으로 인한 중복 예약 가능성
+- 동시 요청 시 "읽기-검증-쓰기" 패턴에서 검증과 쓰기 사이에 다른 요청이 들어올 수 있음
+- 결과적으로 동일 시간대에 중복 예약이 생성될 수 있음
+
+**개선 방안**:
+```java
+// ReservationRepository.java
+@Query("SELECT r FROM Reservation r WHERE r.meetingRoom.id = :meetingRoomId " +
+        "AND r.startTime >= :currentDateTime " +
+        "ORDER BY r.startTime")
+@Lock(LockModeType.PESSIMISTIC_WRITE)  // 비관적 락 추가
+List<Reservation> findReservationsAfterCurrentTime(
+        @Param("meetingRoomId") Long meetingRoomId,
+        @Param("currentDateTime") LocalDateTime currentDateTime);
+```
+
+**개선 효과**:
+- ✅ 동시성 제어로 중복 예약 완전 방지
+- ✅ 기존 `validateAlreadyReservation` 로직과 함께 사용하여 사용자 친화적 에러 메시지 유지
+- ✅ 예약 시스템의 데이터 일관성 보장
+
+**선택 이유**: 
+- **비관적 락**이 예약 시스템에 적합 (동시 예약 시도가 빈번하고 확실한 차단이 필요)
+- **낙관적 락**보다 사용자 경험이 명확함 (재시도 로직 없이 즉시 명확한 피드백)
+- **데이터베이스 제약조건**과 함께 사용하면 더욱 안전한 시스템 구축이 가능할 것 같습니다
+
+---
+
 ### 권장 개발 도구
 - IntelliJ IDEA / Eclipse
 - Postman / Insomnia
