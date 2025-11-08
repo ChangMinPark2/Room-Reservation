@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.LockModeType;
+import javax.persistence.Lock;
+
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -19,6 +22,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r WHERE r.meetingRoom.id = :meetingRoomId " +
             "AND r.startTime >= :currentDateTime " +
             "ORDER BY r.startTime")
+    @Lock(LockModeType.PESSIMISTIC_WRITE)  // 비관적 락 추가
     List<Reservation> findReservationsAfterCurrentTime(
             @Param("meetingRoomId") Long meetingRoomId,
             @Param("currentDateTime") LocalDateTime currentDateTime);
